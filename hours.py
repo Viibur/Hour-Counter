@@ -4,6 +4,7 @@ import os
 
 fieldnames = ['Date','Time','Description']
 
+#function that reads in the csv file
 def readable(name):
     allrows = []
     with open(str(name)+'.csv','r') as csvfile:
@@ -14,12 +15,14 @@ def readable(name):
         fieldnames = [allrows[0][0],allrows[0][1],allrows[0][2]]
     return allrows
         
+# function for appending to the csv file  
 def appendable(name,date,time,desc):
     if (len(date) == 8 and time.isdigit()):
         with open(str(name)+'.csv','a',newline='') as csvfile:
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
             writer.writerow({fieldnames[0]: date, fieldnames[1]: time, fieldnames[2]: desc})
 
+#function 
 def out(name):
     out = Tk()
     
@@ -42,6 +45,7 @@ def out(name):
         
     out.mainloop()
 
+# function to create the two date labels
 def calc(name):
     calculator = Tk()
     
@@ -60,7 +64,7 @@ def calc(name):
     
     calculator.mainloop()
 
-
+# function for calculating the time between two dates (in hours)
 def calcHours(name,startDate, endDate,root):
     hours = 0
     rows = readable(name)
@@ -71,13 +75,14 @@ def calcHours(name,startDate, endDate,root):
         date1 = startDate.split('.')
         date2 = endDate.split('.')
         
-        d1di = int(date1[0])
-        d1mi = int(date1[1])
-        d1yi = int(date1[2])
+        d1di = int(date1[0]) # date1 day integer
+        d1mi = int(date1[1]) # date1 month integer
+        d1yi = int(date1[2]) # date1 year integer
         
-        d2di = int(date2[0])
-        d2mi = int(date2[1])
-        d2yi = int(date2[2])
+        d2di = int(date2[0]) # date2 day integer
+        d2mi = int(date2[1]) # date2 month integer
+        d2yi = int(date2[2]) # date2 year integer
+        
         
         if(d2di < 31):
             d2di += 1
