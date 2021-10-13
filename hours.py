@@ -45,7 +45,7 @@ def out(name):
         
     out.mainloop()
 
-# function to create the two date labels
+# function to create the calculate button and the prompt
 def calc(name):
     calculator = Tk()
     
@@ -83,7 +83,8 @@ def calcHours(name,startDate, endDate,root):
         d2mi = int(date2[1]) # date2 month integer
         d2yi = int(date2[2]) # date2 year integer
         
-        
+
+        # to make sure that the last day is counted aswell
         if(d2di < 31):
             d2di += 1
         elif(d2di == 31):
@@ -93,11 +94,13 @@ def calcHours(name,startDate, endDate,root):
                 d2mi = 1
                 d2yi += 1
                 d2di = 1
-        
+
+        # while the dates are not equal
         while(str(d1di)+str(d1mi)+str(d1yi) != str(d2di)+str(d2mi)+str(d2yi)):
+            # if makes sure dates are correctly inputted
             if(d1yi > d2yi or (d1yi == d2yi and d1mi > d2mi)):
                 break
-            if(includes(d1di,d1mi,d1yi,dates)):
+            if(formatToString(d1di,d1mi,d1yi) in dates):
                 hours += int(rows[dates.index(formatToString(d1di,d1mi,d1yi))][1])
             d1di += 1
             if(d1di >= 32):
@@ -107,21 +110,8 @@ def calcHours(name,startDate, endDate,root):
                     d1mi = 1
                     d1yi += 1
     Label(root,text=hours).pack()
-    
-def includes(day,month,year,dates):
-    if(day < 10):
-        dayS = str(day)
-        day = '0'+dayS
-    if(month < 10):
-        monthS = str(month)
-        month = '0'+monthS
-    if(year < 10):
-        yearS = str(year)
-        year = '0'+yearS
-    if(str(day)+'.'+str(month)+'.'+str(year) in dates):
-        return True
-    return False
-       
+
+# function to transform the given date in to the format we need
 def formatToString(day,month,year):
     if(day < 10):
         dayS = str(day)
@@ -133,11 +123,10 @@ def formatToString(day,month,year):
         yearS = str(year)
         year = '0'+yearS
     return str(day)+'.'+str(month)+'.'+str(year)
-    
+
+# entered information to file
 def intake(name):
     insert = Tk()
-    
-    y = 1
     
     dateLabel = Label(insert,text="Date(DD.MM.YY)")
     dateLabel.pack()
@@ -158,7 +147,8 @@ def intake(name):
     b.pack()
     
     insert.mainloop()
-    
+
+# file creation
 def create(name):
     with open(str(name)+'.csv','w',newline='') as newFile:
         wr = csv.writer(newFile)
@@ -205,4 +195,6 @@ def main():
     
     
     top.mainloop()
+
+
 main()
